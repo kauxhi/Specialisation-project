@@ -1,0 +1,660 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Startups - Professional Network</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        /* Header */
+        .header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 12px 0;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 20px;
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: bold;
+            background: linear-gradient(45deg, #8b5cf6, #06b6d4);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .search-bar {
+            flex: 1;
+            max-width: 400px;
+            margin: 0 40px;
+            position: relative;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 12px 50px 12px 20px;
+            border: 2px solid transparent;
+            border-radius: 25px;
+            background: rgba(139, 92, 246, 0.1);
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: #8b5cf6;
+            background: white;
+            box-shadow: 0 4px 15px rgba(139, 92, 246, 0.3);
+        }
+
+        .search-btn {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            color: #8b5cf6;
+            cursor: pointer;
+            font-size: 18px;
+        }
+
+        .nav-icons {
+            display: flex;
+            gap: 30px;
+            align-items: center;
+        }
+
+        .nav-icon {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-decoration: none;
+            color: #6b7280;
+            transition: all 0.3s ease;
+            padding: 8px;
+            border-radius: 10px;
+        }
+
+        .nav-icon:hover {
+            color: #8b5cf6;
+            background: rgba(139, 92, 246, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .nav-icon span {
+            font-size: 12px;
+            margin-top: 4px;
+        }
+
+        /* Main Content */
+        .main-content {
+            max-width: 1200px;
+            margin: 80px auto 0;
+            padding: 20px;
+            display: grid;
+            grid-template-columns: 240px 1fr 300px;
+            gap: 20px;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(15px);
+            border-radius: 20px;
+            padding: 20px;
+            height: fit-content;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .profile-card {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .profile-avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: linear-gradient(45deg, #8b5cf6, #06b6d4);
+            margin: 0 auto 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 24px;
+            font-weight: bold;
+            box-shadow: 0 4px 15px rgba(139, 92, 246, 0.3);
+        }
+
+        .profile-name {
+            font-size: 18px;
+            font-weight: 600;
+            color: #1f2937;
+            margin-bottom: 5px;
+        }
+
+        .profile-title {
+            color: #6b7280;
+            font-size: 14px;
+        }
+
+        .sidebar-menu {
+            list-style: none;
+        }
+
+        .sidebar-menu li {
+            margin-bottom: 10px;
+        }
+
+        .sidebar-menu a {
+            display: flex;
+            align-items: center;
+            padding: 12px;
+            text-decoration: none;
+            color: #6b7280;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .sidebar-menu a:hover {
+            background: linear-gradient(45deg, rgba(139, 92, 246, 0.1), rgba(6, 182, 212, 0.1));
+            color: #8b5cf6;
+            transform: translateX(5px);
+        }
+
+        /* Feed */
+        .feed {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(15px);
+            border-radius: 20px;
+            padding: 0;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .post-composer {
+            padding: 25px;
+            border-bottom: 1px solid rgba(139, 92, 246, 0.1);
+        }
+
+        .composer-input {
+            width: 100%;
+            padding: 20px;
+            border: 2px solid transparent;
+            border-radius: 15px;
+            background: rgba(139, 92, 246, 0.05);
+            font-size: 16px;
+            resize: none;
+            transition: all 0.3s ease;
+        }
+
+        .composer-input:focus {
+            outline: none;
+            border-color: #8b5cf6;
+            background: white;
+            box-shadow: 0 4px 15px rgba(139, 92, 246, 0.2);
+        }
+
+        .composer-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 15px;
+        }
+
+        .composer-buttons {
+            display: flex;
+            gap: 15px;
+        }
+
+        .composer-btn {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 15px;
+            background: none;
+            border: none;
+            color: #6b7280;
+            cursor: pointer;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .composer-btn:hover {
+            background: rgba(139, 92, 246, 0.1);
+            color: #8b5cf6;
+        }
+
+        .post-btn {
+            background: linear-gradient(45deg, #8b5cf6, #06b6d4);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(139, 92, 246, 0.3);
+        }
+
+        .post-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(139, 92, 246, 0.4);
+        }
+
+        /* Posts */
+        .post {
+            padding: 25px;
+            border-bottom: 1px solid rgba(139, 92, 246, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .post:hover {
+            background: rgba(139, 92, 246, 0.02);
+        }
+
+        .post-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .post-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: linear-gradient(45deg, #06b6d4, #8b5cf6);
+            margin-right: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+        }
+
+        .post-info h3 {
+            font-size: 16px;
+            color: #1f2937;
+            margin-bottom: 2px;
+        }
+
+        .post-info p {
+            color: #6b7280;
+            font-size: 14px;
+        }
+
+        .post-content {
+            margin-bottom: 20px;
+            line-height: 1.6;
+            color: #374151;
+        }
+
+        .post-actions {
+            display: flex;
+            justify-content: space-around;
+            padding-top: 15px;
+            border-top: 1px solid rgba(139, 92, 246, 0.1);
+        }
+
+        .post-action {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 20px;
+            background: none;
+            border: none;
+            color: #6b7280;
+            cursor: pointer;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .post-action:hover {
+            background: rgba(139, 92, 246, 0.1);
+            color: #8b5cf6;
+            transform: translateY(-1px);
+        }
+
+        /* Right Sidebar */
+        .right-sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .widget {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(15px);
+            border-radius: 20px;
+            padding: 20px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .widget h3 {
+            color: #1f2937;
+            margin-bottom: 15px;
+            font-size: 18px;
+        }
+
+        .trending-item {
+            display: flex;
+            align-items: center;
+            padding: 12px;
+            border-radius: 10px;
+            margin-bottom: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .trending-item:hover {
+            background: rgba(139, 92, 246, 0.1);
+            transform: translateX(5px);
+        }
+
+        .trending-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(45deg, #8b5cf6, #06b6d4);
+            margin-right: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 14px;
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .post, .widget, .sidebar {
+            animation: fadeInUp 0.6s ease forwards;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .main-content {
+                grid-template-columns: 1fr;
+                gap: 15px;
+                margin-top: 70px;
+            }
+            
+            .nav-container {
+                padding: 0 15px;
+            }
+            
+            .search-bar {
+                margin: 0 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="nav-container">
+            <div class="logo">Startups</div>
+            
+            <div class="search-bar">
+                <input type="text" class="search-input" placeholder="Search for startups, trends, news...">
+                <button class="search-btn">🔍</button>
+            </div>
+            
+            <nav class="nav-icons">
+                <a href="#" class="nav-icon">
+                    <div style="font-size: 20px;">🏠</div>
+                    <span>Home</span>
+                </a>
+                <a href="#" class="nav-icon">
+                    <div style="font-size: 20px;">🤖</div>
+                    <span>Chatbot</span>
+                </a>
+                <a href="#" class="nav-icon">
+                    <div style="font-size: 20px;">💡</div>
+                    <span>Ideas</span>
+                </a>
+                <a href="#" class="nav-icon">
+                    <div style="font-size: 20px;">📈</div>
+                    <span>Trends</span>
+                </a>
+                <a href="#" class="nav-icon">
+                    <div style="font-size: 20px;">💰</div>
+                    <span>Funding</span>
+                </a>
+                <a href="#" class="nav-icon">
+                    <div style="font-size: 20px;">👤</div>
+                    <span>Profile</span>
+                </a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Left Sidebar -->
+        <aside class="sidebar">
+            <div class="profile-card">
+                <div class="profile-avatar">KG</div>
+                <div class="profile-name">Kaushik Gandhi</div>
+                <div class="profile-title">Data Engineer</div>
+            </div>
+            
+            <ul class="sidebar-menu">
+                <li><a href="#">🤖 Chatbot</a></li>
+                <li><a href="#">💡 Idea Generator</a></li>
+                <li><a href="#">📈 Market Trends</a></li>
+                <li><a href="#">💰 Fundraiser</a></li>
+            </ul>
+        </aside>
+
+        <!-- Feed -->
+        <section class="feed">
+            <!-- Startup News -->
+            <article class="post">
+                <div class="post-header">
+                    <div class="post-avatar" style="background: linear-gradient(45deg, #f59e0b, #ef4444);">TC</div>
+                    <div class="post-info">
+                        <h3>TechCrunch</h3>
+                        <p>Global Startup News • 2h</p>
+                    </div>
+                </div>
+                <div class="post-content">
+                    🚀 Breaking: AI startup "MindBridge" raises $50M Series B led by Sequoia Capital. The company's revolutionary brain-computer interface technology aims to transform how we interact with digital devices. This marks the largest funding round in the BCI space this year. #AI #Funding #Innovation
+                </div>
+                <div class="post-actions">
+                    <button class="post-action">👍 Like</button>
+                    <button class="post-action">💬 Comment</button>
+                    <button class="post-action">🔄 Share</button>
+                    <button class="post-action">📤 Send</button>
+                </div>
+            </article>
+
+            <article class="post">
+                <div class="post-header">
+                    <div class="post-avatar" style="background: linear-gradient(45deg, #10b981, #059669);">CB</div>
+                    <div class="post-info">
+                        <h3>Crunchbase News</h3>
+                        <p>Startup Analytics • 4h</p>
+                    </div>
+                </div>
+                <div class="post-content">
+                    📊 Global startup funding reached $180B in Q1 2025, up 15% from last quarter. Fintech and AI continue to dominate investor interest, while sustainable energy startups show remarkable growth. European startups are particularly thriving with 25% increase in seed funding. #StartupFunding #VentureCapital
+                </div>
+                <div class="post-actions">
+                    <button class="post-action">👍 Like</button>
+                    <button class="post-action">💬 Comment</button>
+                    <button class="post-action">🔄 Share</button>
+                    <button class="post-action">📤 Send</button>
+                </div>
+            </article>
+
+            <article class="post">
+                <div class="post-header">
+                    <div class="post-avatar" style="background: linear-gradient(45deg, #3b82f6, #1d4ed8);">YC</div>
+                    <div class="post-info">
+                        <h3>Y Combinator</h3>
+                        <p>Startup Accelerator • 6h</p>
+                    </div>
+                </div>
+                <div class="post-content">
+                    🎯 Applications for YC Summer 2025 batch are now open! We're particularly excited about startups working on climate tech, developer tools, and emerging markets. Over 400 companies have applied in the first week. Don't miss the deadline - March 21st! #YCombinator #StartupAccelerator #Applications
+                </div>
+                <div class="post-actions">
+                    <button class="post-action">👍 Like</button>
+                    <button class="post-action">💬 Comment</button>
+                    <button class="post-action">🔄 Share</button>
+                    <button class="post-action">📤 Send</button>
+                </div>
+            </article>
+
+            <article class="post">
+                <div class="post-header">
+                    <div class="post-avatar" style="background: linear-gradient(45deg, #8b5cf6, #7c3aed);">SN</div>
+                    <div class="post-info">
+                        <h3>Startup News</h3>
+                        <p>Industry Updates • 8h</p>
+                    </div>
+                </div>
+                <div class="post-content">
+                    🌍 Indian startup ecosystem hits new milestone with 12 new unicorns in 2025 so far! Bangalore leads with 5 unicorns, followed by Mumbai with 4. The Indian startup landscape is thriving across sectors including edtech, fintech, and logistics. #IndiaStartups #Unicorns #Innovation
+                </div>
+                <div class="post-actions">
+                    <button class="post-action">👍 Like</button>
+                    <button class="post-action">💬 Comment</button>
+                    <button class="post-action">🔄 Share</button>
+                    <button class="post-action">📤 Send</button>
+                </div>
+            </article>
+        </section>
+
+        <!-- Right Sidebar -->
+        <aside class="right-sidebar">
+            <div class="widget">
+                <h3>Trending Topics</h3>
+                <div class="trending-item">
+                    <div class="trending-icon">#1</div>
+                    <div>
+                        <div style="font-weight: 600; color: #1f2937;">Remote Work</div>
+                        <div style="color: #6b7280; font-size: 14px;">15.2k posts</div>
+                    </div>
+                </div>
+                <div class="trending-item">
+                    <div class="trending-icon">#2</div>
+                    <div>
+                        <div style="font-weight: 600; color: #1f2937;">AI Innovation</div>
+                        <div style="color: #6b7280; font-size: 14px;">12.8k posts</div>
+                    </div>
+                </div>
+                <div class="trending-item">
+                    <div class="trending-icon">#3</div>
+                    <div>
+                        <div style="font-weight: 600; color: #1f2937;">Sustainability</div>
+                        <div style="color: #6b7280; font-size: 14px;">9.4k posts</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="widget">
+                <h3>Successful Startups</h3>
+                <div class="trending-item">
+                    <div class="trending-icon" style="background: linear-gradient(45deg, #f59e0b, #ef4444);">AI</div>
+                    <div>
+                        <div style="font-weight: 600; color: #1f2937;">OpenAI</div>
+                        <div style="color: #6b7280; font-size: 14px;">$80B Valuation</div>
+                    </div>
+                </div>
+                <div class="trending-item">
+                    <div class="trending-icon" style="background: linear-gradient(45deg, #10b981, #059669);">ST</div>
+                    <div>
+                        <div style="font-weight: 600; color: #1f2937;">Stripe</div>
+                        <div style="color: #6b7280; font-size: 14px;">$95B Valuation</div>
+                    </div>
+                </div>
+                <div class="trending-item">
+                    <div class="trending-icon" style="background: linear-gradient(45deg, #3b82f6, #1d4ed8);">BY</div>
+                    <div>
+                        <div style="font-weight: 600; color: #1f2937;">ByteDance</div>
+                        <div style="color: #6b7280; font-size: 14px;">$180B Valuation</div>
+                    </div>
+                </div>
+                <div class="trending-item">
+                    <div class="trending-icon" style="background: linear-gradient(45deg, #8b5cf6, #7c3aed);">SX</div>
+                    <div>
+                        <div style="font-weight: 600; color: #1f2937;">SpaceX</div>
+                        <div style="color: #6b7280; font-size: 14px;">$137B Valuation</div>
+                    </div>
+                </div>
+                <div class="trending-item">
+                    <div class="trending-icon" style="background: linear-gradient(45deg, #ec4899, #be185d);">CA</div>
+                    <div>
+                        <div style="font-weight: 600; color: #1f2937;">Canva</div>
+                        <div style="color: #6b7280; font-size: 14px;">$40B Valuation</div>
+                    </div>
+                </div>
+            </div>
+        </aside>
+    </main>
+
+    <script>
+        // Add some interactive functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            // Like button functionality
+            document.addEventListener('click', function(e) {
+                if (e.target.classList.contains('post-action') && e.target.textContent.includes('Like')) {
+                    e.target.style.color = '#8b5cf6';
+                    e.target.innerHTML = '💜 Liked';
+                    setTimeout(() => {
+                        e.target.style.color = '#6b7280';
+                        e.target.innerHTML = '👍 Like';
+                    }, 2000);
+                }
+            });
+
+            // Search functionality
+            const searchInput = document.querySelector('.search-input');
+            searchInput.addEventListener('focus', function() {
+                this.placeholder = 'Try "AI startups", "funding news", "unicorns"...';
+            });
+            
+            searchInput.addEventListener('blur', function() {
+                this.placeholder = 'Search for startups, trends, news...';
+            });
+        });
+    </script>
+</body>
+</html>
